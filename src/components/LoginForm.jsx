@@ -25,7 +25,7 @@ import {
   RememberMeLabel,
   CustomTextField,
   PromptText,
-} from "../styles/loginFormStyles";
+} from "../styles/formStyles";
 import diverSCInnova from "../assets/images/diverSCInnova.svg";
 import Logo from "../assets/images/Logo.svg";
 import Visibility from "@mui/icons-material/Visibility";

@@ -1,6 +1,6 @@
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import { Button, FormControlLabel, Link, TextField, Typography } from "@mui/material";
+import { Button, FormControlLabel, InputAdornment, Link, TextField, Typography } from "@mui/material";
 
 export const StyledMainContainer = styled(Box)(({ theme }) => ({
   height: "976px",
@@ -11,13 +11,13 @@ export const StyledLogoContainer = styled(Box)(({ theme }) => ({
   width: "480px",
 }));
 
-export const StyledFormContainer = styled(Box)(({ theme }) => ({
+export const StyledFormContainer = styled(Box)(({ theme,page }) => ({
   display: "flex",
   flexDirection: "column",
   width: "480px",
   marginLeft: "60px",
   paddingRight: "100px",
-  paddingTop: "169px",
+  paddingTop:page=='signUp'?'24px': "169px",
 }));
 
 export const StyledToggleButtonContainer = styled(Box)(({ theme }) => ({
@@ -151,3 +151,20 @@ export const PromptText = styled(Typography)(({ theme, secondaryColor }) => ({
   color: secondaryColor,
   fontWeight: 500,
 }));
+export const CustomTextFieldWithAdornment = styled(TextField)({
+  paddingLeft: 0,  
+  '& .MuiOutlinedInput-root': {
+    paddingLeft: 0,  
+    '& .MuiOutlinedInput-input': {
+      paddingLeft: 0,  
+    },
+  },
+});
+
+export const AdornmentImage = styled('img')({
+  width: "68px", 
+});
+
+export const CustomInputAdornment = styled(InputAdornment)({
+  paddingLeft: 0, 
+});

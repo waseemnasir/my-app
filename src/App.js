@@ -10,7 +10,6 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<LoginPage />} />
-          {/* Add more routes as needed */}
         </Routes>
       </Router>
     </ThemeProvider>

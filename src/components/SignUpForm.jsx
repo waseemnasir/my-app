@@ -1,193 +1,116 @@
 import React from "react";
-import {
-  Box,
-  Button,
-  TextField,
-  Typography,
-  Link,
-  InputAdornment,
-} from "@mui/material";
-import { makeStyles } from "@mui/styles";
-
 import Logo from "../assets/images/Logo.svg";
 import flagImg from "../assets/images/flagImg.svg";
 import { useSignUpForm } from "../hooks/useSignUpForm";
 import useThemeColors from "../hooks/useTheme";
-
-const useStyles = makeStyles((theme) => ({
-  inputPadding: {
-    "& .MuiOutlinedInput-input": {
-      padding: "12px 16px",
-    },
-  },
-}));
+import {
+  StyledMainContainer,
+  StyledLogoContainer,
+  StyledFormContainer,
+  StyledToggleButtonContainer,
+  StyledAccountTextContainer,
+  CompanyButton,
+  EducatorButton,
+  LoginButton,
+  CredentialText,
+  WelcomeText,
+  LabelText,
+  LogoImage,
+  SignupLink,
+  CustomTextField,
+  PromptText,
+  CustomTextFieldWithAdornment,
+  AdornmentImage,
+  CustomInputAdornment,
+} from "../styles/formStyles";
 
 const SignUpForm = () => {
-  const classes = useStyles();
   const { primaryColor, secondaryColor, secondaryDarkColor } = useThemeColors();
   const { formData, handleInput, handleSubmit, isCompany, setIsCompany } =
     useSignUpForm();
 
   return (
-    <Box
-      sx={{
-        height: "976px",
-      }}
-    >
-      <Box sx={{ marginLeft: "60px", width: 480 }}>
-        <img src={Logo} alt="Logo" style={{ width: "73px", height: "44px" }} />
-      </Box>
-      <Box
+    <StyledMainContainer>
+      <StyledLogoContainer>
+        <LogoImage src={Logo} alt="Logo" />
+      </StyledLogoContainer>
+      <StyledFormContainer
         component="form"
         onSubmit={handleSubmit}
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          width: 480,
-          ml: "60px",
-          mr: "100px",
-          pt: "24px",
-        }}
+        page="signUp"
       >
-        <Typography
-          style={{ fontSize: "32px", fontFamily: "Outfit", fontWeight: 600 }}
-        >
+        <WelcomeText primaryColor={primaryColor}>
           Create Your Account
-        </Typography>
-        <Typography
-          style={{
-            fontSize: "16px",
-            fontWeight: 400,
-            color: "#0A0A0A66",
-            marginTop: "8px",
-            fontFamily: "Outfit",
-            marginBottom: "32px",
-          }}
-        >
+        </WelcomeText>
+        <CredentialText secondaryColor={secondaryColor}>
           Please enter the following information in order to sign up
-        </Typography>
+        </CredentialText>
 
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            maxWidth: "335px",
-            height: "56px",
-            borderRadius: "8px",
-            padding: "8px",
-            gap: "12px",
-            bgcolor: "rgba(10, 10, 10, 0.05)",
-            mb: 4,
-          }}
-        >
-          <Button
+        <StyledToggleButtonContainer>
+          <CompanyButton
             variant="contained"
             onClick={() => setIsCompany(true)}
-            sx={{
-              width: "117px",
-              height: "40px",
-              borderRadius: "8px",
-              padding: "10px 20px",
-              typography: "body1",
-              color: isCompany ? "#FFFFFF" : secondaryColor,
-              bgcolor: isCompany ? "#7F5FFF" : "transparent",
-              fontFamily: "Outfit",
-              fontWeight: 600,
-              fontSize: "16px",
-              lineHeight: "20px",
-              boxShadow: "none",
-              "&:hover": {
-                bgcolor: isCompany ? "#6e4fe2" : "transparent",
-              },
-            }}
+            isCompany={isCompany}
+            secondaryColor={secondaryColor}
           >
             Company
-          </Button>
-          <Button
+          </CompanyButton>
+          <EducatorButton
             variant="contained"
             onClick={() => setIsCompany(false)}
-            sx={{
-              width: "190px",
-              height: "40px",
-              borderRadius: "8px",
-              padding: "10px 20px",
-              typography: "body1",
-              color: !isCompany ? "#FFFFFF" : secondaryColor,
-              bgcolor: !isCompany ? "#7F5FFF" : "transparent",
-              fontFamily: "Outfit",
-              fontWeight: 600,
-              fontSize: "16px",
-              lineHeight: "20px",
-              boxShadow: "none",
-              "&:hover": {
-                bgcolor: !isCompany ? "#6e4fe2" : "transparent",
-              },
-            }}
+            isCompany={isCompany}
+            secondaryColor={secondaryColor}
           >
             Educator
-          </Button>
-        </Box>
-        <Typography sx={{ mb: 1, color: primaryColor }}>Full Name</Typography>
+          </EducatorButton>
+        </StyledToggleButtonContainer>
+        <LabelText primaryColor={primaryColor}>Full Name</LabelText>
 
-        <TextField
-          className={classes.inputPadding}
+        <CustomTextField
           label="Enter full Name"
           variant="outlined"
           fullWidth
           value={formData.fullName}
           onChange={handleInput("fullName")}
-          sx={{ mb: "20px" }}
         />
-        <Typography sx={{ mb: 1, color: primaryColor }}>Email</Typography>
+        <LabelText primaryColor={primaryColor}>Email</LabelText>
 
-        <TextField
-          className={classes.inputPadding}
+        <CustomTextField
           label="Enter email"
           type="email"
           variant="outlined"
           fullWidth
           value={formData.email}
           onChange={handleInput("email")}
-          sx={{ mb: "20px" }}
         />
-        <Typography sx={{ mb: 1, color: primaryColor }}>Password</Typography>
-        <TextField
-          className={classes.inputPadding}
+        <LabelText primaryColor={primaryColor}>Password</LabelText>
+        <CustomTextField
           label="Enter password"
           type="password"
           variant="outlined"
           fullWidth
           value={formData.password}
           onChange={handleInput("password")}
-          sx={{ mb: "20px" }}
         />
-        <Typography sx={{ mb: 1, color: primaryColor }}>
-          Confirm Password
-        </Typography>
-        <TextField
-          className={classes.inputPadding}
+        <LabelText primaryColor={primaryColor}>Confirm Password</LabelText>
+        <CustomTextField
           label="Enter confirm Password"
           type="password"
           variant="outlined"
           fullWidth
           value={formData.confirmPassword}
           onChange={handleInput("confirmPassword")}
-          sx={{ mb: "20px" }}
         />
-        <Typography sx={{ mb: 1, color: primaryColor }}>Profession</Typography>
-        <TextField
-          className={classes.inputPadding}
+        <LabelText primaryColor={primaryColor}>Profession</LabelText>
+        <CustomTextField
           label="Enter profession"
           variant="outlined"
           fullWidth
           value={formData.profession}
           onChange={handleInput("profession")}
-          sx={{ mb: "20px" }}
         />
-        <Typography sx={{ mb: 1, color: primaryColor }}>Telephone</Typography>
-        <TextField
-          className={classes.inputPadding}
+        <LabelText primaryColor={primaryColor}>Telephone</LabelText>
+        <CustomTextFieldWithAdornment
           placeholder="(555 000-0000)"
           type="tel"
           variant="outlined"
@@ -195,52 +118,35 @@ const SignUpForm = () => {
           value={formData.telephone}
           onChange={handleInput("telephone")}
           InputProps={{
-            sx: {
-              paddingLeft: 0,
-              "& .MuiOutlinedInput-input": {
-                paddingLeft: 0,
-              },
-            },
             startAdornment: (
-              <InputAdornment position="start">
-                <img src={flagImg} alt="Logo" style={{ width: "68px" }} />
-              </InputAdornment>
+              <CustomInputAdornment position="start">
+                <AdornmentImage src={flagImg} alt="Logo"/>
+              </CustomInputAdornment>
             ),
           }}
         />
-        <Button
+        <LoginButton
           type="submit"
           variant="contained"
-          sx={{
-            backgroundColor: "rgba(96, 58, 248, 0.2) !important",
-            color: secondaryColor,
-            fontFamily: "Outfit",
-            mt: 3,
-            mb: "20px",
-            height: "48px",
-          }}
-          fullWidth
+          secondaryColor={secondaryColor}
         >
           Continue
-        </Button>
+        </LoginButton>
 
-        <Box sx={{ fontFamily: "Outfit", textAlign: "center" }}>
-          <Typography
-            variant="body2"
-            sx={{ color: secondaryColor, fontWeight: 500 }}
-          >
+        <StyledAccountTextContainer>
+          <PromptText variant="body2" color={secondaryColor}>
             Already have an account?{" "}
-            <Link
+            <SignupLink
               href="#"
               onClick={() => alert("Log In")}
-              sx={{ color: secondaryDarkColor }}
+              secondaryDarkColor={secondaryDarkColor}
             >
               Log In
-            </Link>
-          </Typography>
-        </Box>
-      </Box>
-    </Box>
+            </SignupLink>
+          </PromptText>
+        </StyledAccountTextContainer>
+      </StyledFormContainer>
+    </StyledMainContainer>
   );
 };
 
