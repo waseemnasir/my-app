@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Button,
   TextField,
@@ -7,19 +7,17 @@ import {
   Checkbox,
   FormControlLabel,
   Link,
-  useTheme,
   InputAdornment,
   IconButton,
 } from "@mui/material";
-import { useDispatch } from "react-redux";
-import { login } from "../features/auth/authSlice";
 import diverSCInnova from "../assets/images/diverSCInnova.svg";
 import Logo from "../assets/images/Logo.svg";
-import passwordIMG from "../assets/images/passwordIMG.svg"
 import { makeStyles } from "@mui/styles";
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-const useStyles = makeStyles((theme) => ({
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import useLoginForm from "../hooks/useLoginForm";
+import useThemeColors from "../hooks/useTheme";
+const useStyles = makeStyles(() => ({
   inputPadding: {
     "& .MuiOutlinedInput-input": {
       padding: "12px 16px",
@@ -29,25 +27,20 @@ const useStyles = makeStyles((theme) => ({
 const LoginForm = (props) => {
   const { currentIndex, setCurrentIndex } = props;
   const classes = useStyles();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [isCompany, setIsCompany] = useState(true);
-  const [rememberMe, setRememberMe] = useState(false);
-  const dispatch = useDispatch();
-  const [showPassword, setShowPassword] = useState(false);
-  const theme = useTheme();
-  const primaryColor = theme.palette.primary.main
-  const secondaryColor = theme.palette.secondary.main
-  const secondaryDark = theme.palette.secondary.dark
-  const handleTogglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(login({ email, password, rememberMe }));
-    setCurrentIndex(currentIndex + 1);
-  };
+  const { primaryColor, secondaryColor, secondaryDarkColor } = useThemeColors();
+  const {
+    email,
+    setEmail,
+    password,
+    setPassword,
+    isCompany,
+    setIsCompany,
+    rememberMe,
+    setRememberMe,
+    showPassword,
+    handleTogglePasswordVisibility,
+    handleSubmit,
+  } = useLoginForm({ currentIndex, setCurrentIndex });
 
   return (
     <Box style={{ height: "976px" }}>
@@ -56,18 +49,23 @@ const LoginForm = (props) => {
       </Box>
       <Box
         component="form"
-        onSubmit={handleSubmit}
+        onSubmit={(e) => handleSubmit(e)}
         sx={{
           display: "flex",
           flexDirection: "column",
-          width: '480px',
+          width: "480px",
           ml: "60px",
           pr: "100px",
           pt: "169px",
         }}
       >
         <Typography
-          style={{ fontSize: "32px", fontFamily: "Outfit", fontWeight: 600,color:primaryColor }}
+          style={{
+            fontSize: "32px",
+            fontFamily: "Outfit",
+            fontWeight: 600,
+            color: primaryColor,
+          }}
         >
           Welcome to AIA
         </Typography>
@@ -75,7 +73,7 @@ const LoginForm = (props) => {
           style={{
             fontSize: "16px",
             fontWeight: 400,
-            color:secondaryColor,
+            color: secondaryColor,
             marginTop: "8px",
             fontFamily: "Outfit",
             marginBottom: "32px",
@@ -136,7 +134,7 @@ const LoginForm = (props) => {
               fontWeight: 600,
               fontSize: "16px",
               lineHeight: "20px",
-              boxShadow:'none',
+              boxShadow: "none",
               "&:hover": {
                 bgcolor: !isCompany ? "#6e4fe2" : "transparent",
               },
@@ -145,7 +143,7 @@ const LoginForm = (props) => {
             Educator
           </Button>
         </Box>
-        <Typography sx={{ mb: 1,color:primaryColor }}>Email</Typography>
+        <Typography sx={{ mb: 1, color: primaryColor }}>Email</Typography>
 
         <TextField
           className={classes.inputPadding}
@@ -156,11 +154,11 @@ const LoginForm = (props) => {
           onChange={(e) => setEmail(e.target.value)}
           sx={{ mb: "20px" }}
         />
-        <Typography sx={{ mb: 1,color:primaryColor }}>Password</Typography>
+        <Typography sx={{ mb: 1, color: primaryColor }}>Password</Typography>
         <TextField
           className={classes.inputPadding}
           label="Enter password"
-          type={showPassword ? 'text' : 'password'}
+          type={showPassword ? "text" : "password"}
           variant="outlined"
           fullWidth
           value={password}
@@ -176,7 +174,7 @@ const LoginForm = (props) => {
                   {showPassword ? <VisibilityOff /> : <Visibility />}
                 </IconButton>
               </InputAdornment>
-            )
+            ),
           }}
         />
         <Box display={"flex"} justifyContent={"space-between"}>
@@ -189,7 +187,7 @@ const LoginForm = (props) => {
               />
             }
             label="Remember Me"
-            sx={{ alignSelf: "flex-start",color:primaryColor }}
+            sx={{ alignSelf: "flex-start", color: primaryColor }}
           />
 
           <Link
@@ -224,9 +222,16 @@ const LoginForm = (props) => {
         </Button>
 
         <Box sx={{ fontFamily: "Outfit", textAlign: "center" }}>
-          <Typography variant="body2" sx={{color:secondaryColor ,fontWeight:500}}>
+          <Typography
+            variant="body2"
+            sx={{ color: secondaryColor, fontWeight: 500 }}
+          >
             Don’t have an account?{" "}
-            <Link href="#" onClick={() => alert("Sign Up")} sx={{color:secondaryDark}}>
+            <Link
+              href="#"
+              onClick={() => alert("Sign Up")}
+              sx={{ color: secondaryDarkColor }}
+            >
               Sign Up
             </Link>
           </Typography>

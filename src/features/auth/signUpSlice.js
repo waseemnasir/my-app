@@ -1,4 +1,3 @@
-// src/features/auth/signUpSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -9,10 +8,7 @@ const initialState = {
     confirmPassword: "",
     profession: "",
     telephone: "",
-  },
-  isCompany: true,
-  status: "idle",
-  error: null,
+  }
 };
 
 const signUpSlice = createSlice({

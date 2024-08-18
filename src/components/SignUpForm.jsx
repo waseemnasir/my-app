@@ -1,11 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { Box, Button, TextField, Typography, Link, InputAdornment, useTheme } from "@mui/material";
+import React from "react";
+import {
+  Box,
+  Button,
+  TextField,
+  Typography,
+  Link,
+  InputAdornment,
+} from "@mui/material";
 import { makeStyles } from "@mui/styles";
 
 import Logo from "../assets/images/Logo.svg";
 import flagImg from "../assets/images/flagImg.svg";
-import { updateFormData } from "../features/auth/signUpSlice";
-import { useDispatch } from "react-redux";
+import { useSignUpForm } from "../hooks/useSignUpForm";
+import useThemeColors from "../hooks/useTheme";
 
 const useStyles = makeStyles((theme) => ({
   inputPadding: {
@@ -17,34 +24,9 @@ const useStyles = makeStyles((theme) => ({
 
 const SignUpForm = () => {
   const classes = useStyles();
-  const [isCompany, setIsCompany] = useState(true);
-  const dispatch = useDispatch();
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    profession: "",
-    telephone: "",
-  });
-  const theme = useTheme();
-  const primaryColor = theme.palette.primary.main
-  const secondaryColor = theme.palette.secondary.main
-  const secondaryDark = theme.palette.secondary.dark
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  const handleInput = (field) => (event) => {
-    setFormData({ ...formData, [field]: event.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Submitted data:", formData);
-    dispatch(updateFormData(formData));
-  };
+  const { primaryColor, secondaryColor, secondaryDarkColor } = useThemeColors();
+  const { formData, handleInput, handleSubmit, isCompany, setIsCompany } =
+    useSignUpForm();
 
   return (
     <Box
@@ -146,7 +128,7 @@ const SignUpForm = () => {
             Educator
           </Button>
         </Box>
-        <Typography sx={{ mb: 1,color:primaryColor }}>Full Name</Typography>
+        <Typography sx={{ mb: 1, color: primaryColor }}>Full Name</Typography>
 
         <TextField
           className={classes.inputPadding}
@@ -157,7 +139,7 @@ const SignUpForm = () => {
           onChange={handleInput("fullName")}
           sx={{ mb: "20px" }}
         />
-        <Typography sx={{ mb: 1,color:primaryColor }}>Email</Typography>
+        <Typography sx={{ mb: 1, color: primaryColor }}>Email</Typography>
 
         <TextField
           className={classes.inputPadding}
@@ -169,7 +151,7 @@ const SignUpForm = () => {
           onChange={handleInput("email")}
           sx={{ mb: "20px" }}
         />
-        <Typography sx={{ mb: 1,color:primaryColor }}>Password</Typography>
+        <Typography sx={{ mb: 1, color: primaryColor }}>Password</Typography>
         <TextField
           className={classes.inputPadding}
           label="Enter password"
@@ -180,7 +162,9 @@ const SignUpForm = () => {
           onChange={handleInput("password")}
           sx={{ mb: "20px" }}
         />
-        <Typography sx={{ mb: 1,color:primaryColor }}>Confirm Password</Typography>
+        <Typography sx={{ mb: 1, color: primaryColor }}>
+          Confirm Password
+        </Typography>
         <TextField
           className={classes.inputPadding}
           label="Enter confirm Password"
@@ -191,7 +175,7 @@ const SignUpForm = () => {
           onChange={handleInput("confirmPassword")}
           sx={{ mb: "20px" }}
         />
-        <Typography sx={{ mb: 1,color:primaryColor }}>Profession</Typography>
+        <Typography sx={{ mb: 1, color: primaryColor }}>Profession</Typography>
         <TextField
           className={classes.inputPadding}
           label="Enter profession"
@@ -201,7 +185,7 @@ const SignUpForm = () => {
           onChange={handleInput("profession")}
           sx={{ mb: "20px" }}
         />
-        <Typography sx={{ mb: 1,color:primaryColor }}>Telephone</Typography>
+        <Typography sx={{ mb: 1, color: primaryColor }}>Telephone</Typography>
         <TextField
           className={classes.inputPadding}
           placeholder="(555 000-0000)"
@@ -212,18 +196,17 @@ const SignUpForm = () => {
           onChange={handleInput("telephone")}
           InputProps={{
             sx: {
-              paddingLeft: 0,  // Sets padding to zero
-              '& .MuiOutlinedInput-input': {
-                paddingLeft: 0  // Ensures padding is zero for the input element itself
-              }
-            },        
+              paddingLeft: 0,
+              "& .MuiOutlinedInput-input": {
+                paddingLeft: 0,
+              },
+            },
             startAdornment: (
               <InputAdornment position="start">
-        <img src={flagImg} alt="Logo" style={{ width: "68px" }} />
+                <img src={flagImg} alt="Logo" style={{ width: "68px" }} />
               </InputAdornment>
-            )
+            ),
           }}
-    
         />
         <Button
           type="submit"
@@ -242,9 +225,16 @@ const SignUpForm = () => {
         </Button>
 
         <Box sx={{ fontFamily: "Outfit", textAlign: "center" }}>
-          <Typography variant="body2" sx={{color:secondaryColor ,fontWeight:500}}>
+          <Typography
+            variant="body2"
+            sx={{ color: secondaryColor, fontWeight: 500 }}
+          >
             Already have an account?{" "}
-            <Link href="#" onClick={() => alert("Log In")}sx={{color:secondaryDark}}>
+            <Link
+              href="#"
+              onClick={() => alert("Log In")}
+              sx={{ color: secondaryDarkColor }}
+            >
               Log In
             </Link>
           </Typography>
