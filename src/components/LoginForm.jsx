@@ -1,32 +1,39 @@
 import React from "react";
 import {
-  Button,
-  TextField,
-  Box,
-  Typography,
   Checkbox,
-  FormControlLabel,
-  Link,
   InputAdornment,
   IconButton,
 } from "@mui/material";
+import {
+  StyledMainContainer,
+  StyledLogoContainer,
+  StyledFormContainer,
+  StyledToggleButtonContainer,
+  StyledBottomImageContainer,
+  StyledAccountTextContainer,
+  StyledCredentialsContainer,
+  CompanyButton,
+  EducatorButton,
+  LoginButton,
+  CredentialText,
+  WelcomeText,
+  LabelText,
+  ForgotPasswordLink,
+  DecorativeImage,
+  LogoImage,
+  SignupLink,
+  RememberMeLabel,
+  CustomTextField,
+  PromptText,
+} from "../styles/loginFormStyles";
 import diverSCInnova from "../assets/images/diverSCInnova.svg";
 import Logo from "../assets/images/Logo.svg";
-import { makeStyles } from "@mui/styles";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import useLoginForm from "../hooks/useLoginForm";
 import useThemeColors from "../hooks/useTheme";
-const useStyles = makeStyles(() => ({
-  inputPadding: {
-    "& .MuiOutlinedInput-input": {
-      padding: "12px 16px",
-    },
-  },
-}));
 const LoginForm = (props) => {
   const { currentIndex, setCurrentIndex } = props;
-  const classes = useStyles();
   const { primaryColor, secondaryColor, secondaryDarkColor } = useThemeColors();
   const {
     email,
@@ -43,127 +50,51 @@ const LoginForm = (props) => {
   } = useLoginForm({ currentIndex, setCurrentIndex });
 
   return (
-    <Box style={{ height: "976px" }}>
-      <Box sx={{ marginLeft: "60px", width: 480 }}>
-        <img src={Logo} alt="Logo" style={{ width: "73px", height: "44px" }} />
-      </Box>
-      <Box
-        component="form"
-        onSubmit={(e) => handleSubmit(e)}
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          width: "480px",
-          ml: "60px",
-          pr: "100px",
-          pt: "169px",
-        }}
-      >
-        <Typography
-          style={{
-            fontSize: "32px",
-            fontFamily: "Outfit",
-            fontWeight: 600,
-            color: primaryColor,
-          }}
-        >
-          Welcome to AIA
-        </Typography>
-        <Typography
-          style={{
-            fontSize: "16px",
-            fontWeight: 400,
-            color: secondaryColor,
-            marginTop: "8px",
-            fontFamily: "Outfit",
-            marginBottom: "32px",
-          }}
-        >
+    <StyledMainContainer>
+      <StyledLogoContainer>
+        <LogoImage src={Logo} alt="Logo" />
+      </StyledLogoContainer>
+      <StyledFormContainer component="form" onSubmit={(e) => handleSubmit(e)}>
+        <WelcomeText primaryColor={primaryColor}>Welcome to AIA</WelcomeText>
+        <CredentialText secondaryColor={secondaryColor}>
           Please enter your login credentials to access your account
-        </Typography>
+        </CredentialText>
 
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            width: "335px",
-            height: "56px",
-            borderRadius: "8px",
-            padding: "8px",
-            gap: "12px",
-            bgcolor: "rgba(10, 10, 10, 0.05)",
-            mb: 4,
-          }}
-        >
-          <Button
+        <StyledToggleButtonContainer>
+          <CompanyButton
             variant="contained"
             onClick={() => setIsCompany(true)}
-            sx={{
-              width: "117px",
-              height: "40px",
-              borderRadius: "8px",
-              padding: "10px 20px",
-              typography: "body1",
-              color: isCompany ? "#FFFFFF" : secondaryColor,
-              bgcolor: isCompany ? "#7F5FFF" : "transparent",
-              fontFamily: "Outfit",
-              fontWeight: 600,
-              fontSize: "16px",
-              lineHeight: "20px",
-              boxShadow: "none",
-              "&:hover": {
-                bgcolor: isCompany ? "#6e4fe2" : "transparent",
-              },
-            }}
+            isCompany={isCompany}
+            secondaryColor={secondaryColor}
           >
             Company
-          </Button>
-          <Button
+          </CompanyButton>
+          <EducatorButton
             variant="contained"
             onClick={() => setIsCompany(false)}
-            sx={{
-              width: "190px",
-              height: "40px",
-              borderRadius: "8px",
-              padding: "10px 20px",
-              typography: "body1",
-              color: !isCompany ? "#FFFFFF" : "rgba(10, 10, 10, 0.4)",
-              bgcolor: !isCompany ? "#7F5FFF" : "transparent",
-              fontFamily: "Outfit",
-              fontWeight: 600,
-              fontSize: "16px",
-              lineHeight: "20px",
-              boxShadow: "none",
-              "&:hover": {
-                bgcolor: !isCompany ? "#6e4fe2" : "transparent",
-              },
-            }}
+            isCompany={isCompany}
+            secondaryColor={secondaryColor}
           >
             Educator
-          </Button>
-        </Box>
-        <Typography sx={{ mb: 1, color: primaryColor }}>Email</Typography>
+          </EducatorButton>
+        </StyledToggleButtonContainer>
+        <LabelText primaryColor={primaryColor}>Email</LabelText>
 
-        <TextField
-          className={classes.inputPadding}
+        <CustomTextField
           label="Enter email"
           variant="outlined"
           fullWidth
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          sx={{ mb: "20px" }}
         />
-        <Typography sx={{ mb: 1, color: primaryColor }}>Password</Typography>
-        <TextField
-          className={classes.inputPadding}
+        <LabelText primaryColor={primaryColor}>Password</LabelText>
+        <CustomTextField
           label="Enter password"
           type={showPassword ? "text" : "password"}
           variant="outlined"
           fullWidth
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          sx={{ mb: "20px" }}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -177,8 +108,9 @@ const LoginForm = (props) => {
             ),
           }}
         />
-        <Box display={"flex"} justifyContent={"space-between"}>
-          <FormControlLabel
+        <StyledCredentialsContainer>
+          <RememberMeLabel
+            primaryColor={primaryColor}
             control={
               <Checkbox
                 checked={rememberMe}
@@ -187,64 +119,41 @@ const LoginForm = (props) => {
               />
             }
             label="Remember Me"
-            sx={{ alignSelf: "flex-start", color: primaryColor }}
           />
 
-          <Link
+          <ForgotPasswordLink
             component="button"
             variant="body2"
             onClick={() => alert("Forgot Password?")}
-            sx={{
-              alignSelf: "flex-end",
-              mb: 2,
-              color: "#0C0129",
-              fontFamily: "Outfit",
-              textDecorationColor: "#0C0129",
-            }}
           >
             Forgot Password?
-          </Link>
-        </Box>
-        <Button
+          </ForgotPasswordLink>
+        </StyledCredentialsContainer>
+        <LoginButton
           type="submit"
           variant="contained"
-          sx={{
-            backgroundColor: "rgba(96, 58, 248, 0.2) !important",
-            color: secondaryColor,
-            fontFamily: "Outfit",
-            mt: 3,
-            mb: 3,
-            height: "48px",
-          }}
-          fullWidth
+          secondaryColor={secondaryColor}
         >
           Log In
-        </Button>
+        </LoginButton>
 
-        <Box sx={{ fontFamily: "Outfit", textAlign: "center" }}>
-          <Typography
-            variant="body2"
-            sx={{ color: secondaryColor, fontWeight: 500 }}
-          >
+        <StyledAccountTextContainer>
+          <PromptText variant="body2" color={secondaryColor}>
             Don’t have an account?{" "}
-            <Link
+            <SignupLink
               href="#"
               onClick={() => alert("Sign Up")}
-              sx={{ color: secondaryDarkColor }}
+              secondaryDarkColor={secondaryDarkColor}
             >
               Sign Up
-            </Link>
-          </Typography>
-        </Box>
-        <Box sx={{ mt: "112px", mr: "auto" }}>
-          <img
-            src={diverSCInnova}
-            alt="Illustrative description"
-            style={{ borderRadius: 10 }}
-          />
-        </Box>
-      </Box>
-    </Box>
+            </SignupLink>
+          </PromptText>
+        </StyledAccountTextContainer>
+        <StyledBottomImageContainer>
+          <DecorativeImage src={diverSCInnova} alt="Illustrative description" />
+        </StyledBottomImageContainer>
+      </StyledFormContainer>
+    </StyledMainContainer>
   );
 };
 
